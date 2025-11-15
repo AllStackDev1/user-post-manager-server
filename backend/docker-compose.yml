@@ -1,0 +1,12 @@
+version: "3.9"
+
+services:
+  backend:
+    build: .
+    container_name: backend
+    ports:
+      - "8000:3001"
+    volumes:
+      - .:/usr/src/app               # live code sync
+      - /usr/src/app/node_modules    # prevent host from overwriting node_modules
+    command: npm run dev

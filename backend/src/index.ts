@@ -5,6 +5,7 @@ import usersRouter from "./routes/users";
 const port = config.get("port") as number;
 
 const app: Application = express();
+app.use(express.json());
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
@@ -18,6 +19,10 @@ app.use((req, res, next) => {
 app.use("/posts", postsRouter);
 app.use("/users", usersRouter);
 
-app.listen(port, () => {
-  console.log(`API server is running on port ${port}`);
-});
+export default app;
+
+if (require.main === module) {
+  app.listen(port, () => {
+    console.log(`API server is running on port ${port}`);
+  });
+}
