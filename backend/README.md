@@ -106,6 +106,10 @@ backend/
 └── data.db         # SQLite database file
 ```
 
+## Live Demo
+
+The application is deployed and available at: https://user-post-manager-server.onrender.com
+
 ## Configuration
 
 The server uses `config` package for environment settings:
