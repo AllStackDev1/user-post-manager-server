@@ -1,6 +1,6 @@
 import { Router, Request, Response } from "express";
 
-import { getUsers, getUsersCount } from "../db/users/users";
+import { getUsers, getUserById, getUsersCount } from "../db/users/users";
 import { PaginatedResponse } from "../types";
 import { User } from "../db/users/types";
 
@@ -28,6 +28,24 @@ router.get("/", async (req: Request, res: Response): Promise<void> => {
       totalPages
     };
     res.send(response);
+  } catch (error) {
+    res.status(500).send({ message: "Database error" });
+  }
+});
+
+router.get("/:id", async (req: Request, res: Response): Promise<void> => {
+  const id = req.params.id;
+  if (!id) {
+    res.status(400).send({ message: "User ID is required" });
+    return;
+  }
+  try {
+    const user = await getUserById(id);
+    if (!user) {
+      res.status(404).send({ message: "User not found" });
+      return;
+    }
+    res.send(user);
   } catch (error) {
     res.status(500).send({ message: "Database error" });
   }
